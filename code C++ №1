@@ -1,258 +1,221 @@
-#include iostream
-#include cmath   Для функции abs
-#include string  Для работы со строками
-#include limits  Для ограничения ввода
+#include <iostream>
+#include <cmath>
+#include <string>
 
 using namespace std;
 
- --- Модуль 1 Методы ---
+// --- Модуль 1: Методы ---
 
- Функция для получения дробной части числа
 double fraction(double x) {
-    return x - static_castint(x);   Отнимаем целую часть от числа
+    return x - static_cast<int>(x);
 }
 
- Функция для проверки, является ли число двузначным
 bool is2Digits(int x) {
-    int absX = abs(x);   Преобразуем число к положительному для работы с отрицательными числами
-    return absX = 10 && absX = 99;   Проверяем, лежит ли число в диапазоне от 10 до 99
+    int absX = abs(x);
+    return absX >= 10 && absX <= 99;
 }
 
- Функция для проверки, входит ли число в диапазон
 bool isInRange(int a, int b, int num) {
-     Определяем минимум и максимум из границ a и b
-    int lower = (a  b)  a  b;
-    int upper = (a  b)  a  b;
-
-     Проверяем, входит ли число num в диапазон [lower, upper]
-    return num = lower && num = upper;
+    int lower = (a < b) ? a : b;
+    int upper = (a > b) ? a : b;
+    return num >= lower && num <= upper;
 }
 
- Функция для проверки равенства трех чисел
 bool isEqual(int a, int b, int c) {
-    return (a == b) && (b == c);   Проверяем, равны ли все три числа
+    return (a == b) && (b == c);
 }
 
- --- Модуль 2 Условия ---
+// --- Модуль 2: Условия ---
 
- Функция для получения модуля числа
 int customAbs(int x) {
-    return (x  0)  -x  x;   Возвращаем x без знака минус, если оно отрицательное
+    return (x < 0) ? -x : x;
 }
 
- Функция для проверки, делится ли число на 3 или 5
 bool is35(int x) {
-    bool divisibleBy3 = (x % 3 == 0);
-    bool divisibleBy5 = (x % 5 == 0);
-    return (divisibleBy3  divisibleBy5) && !(divisibleBy3 && divisibleBy5);
+    return (x % 3 == 0) ^ (x % 5 == 0);
 }
 
- Функция для нахождения максимума из трех чисел
 int max3(int x, int y, int z) {
-    return (x  y)  ((x  z)  x  z)  ((y  z)  y  z);
+    return (x > y) ? ((x > z) ? x : z) : ((y > z) ? y : z);
 }
 
- Функция для двойной суммы
 int sum2(int x, int y) {
     int sum = x + y;
-     Если сумма в диапазоне от 10 до 19, вернуть 20
-    if (sum = 10 && sum = 19) {
-        return 20;
-    }
-    return sum;   В противном случае вернуть обычную сумму
+    return (sum >= 10 && sum <= 19) ? 20 : sum;
 }
 
- Функция для получения названия дня недели
 string day(int x) {
     switch (x) {
-        case 1 return понедельник;
-        case 2 return вторник;
-        case 3 return среда;
-        case 4 return четверг;
-        case 5 return пятница;
-        case 6 return суббота;
-        case 7 return воскресенье;
-        default return это не день недели;   Если число не в диапазоне от 1 до 7
+        case 1: return "понедельник";
+        case 2: return "вторник";
+        case 3: return "среда";
+        case 4: return "четверг";
+        case 5: return "пятница";
+        case 6: return "суббота";
+        case 7: return "воскресенье";
+        default: return "это не день недели";
     }
 }
 
- --- Модуль 3 Циклы ---
+// --- Модуль 3: Циклы ---
 
- Функция для получения строки с числами от 0 до x
 string listNums(int x) {
-    string result = ;
-    for (int i = 0; i = x; ++i) {
-        result += to_string(i);   Добавляем число в строку
-        if (i  x) {
-            result +=  ;   Добавляем пробел, если это не последнее число
-        }
+    string result = "";
+    for (int i = 0; i <= x; ++i) {
+        result += to_string(i);
+        if (i < x) result += " ";
     }
-    return result;   Возвращаем строку с числами
+    return result;
 }
 
- Функция для получения строки с четными числами от 0 до x
 string chet(int x) {
-    string result = ;
-    for (int i = 0; i = x; i += 2) {   Шаг 2 для получения четных чисел
-        result += to_string(i);   Добавляем четное число в строку
-        if (i + 2 = x) {
-            result +=  ;   Добавляем пробел, если это не последнее четное число
-        }
+    string result = "";
+    for (int i = 0; i <= x; i += 2) {
+        result += to_string(i);
+        if (i + 2 <= x) result += " ";
     }
-    return result;   Возвращаем строку с четными числами
+    return result;
 }
 
- Функция для получения длины числа
 int numLen(long x) {
     int length = 0;
-    if (x == 0) return 1;   Если x равно 0, длина равна 1
+    if (x == 0) return 1;
 
-    x = customAbs(x);   Преобразуем x в положительное
-    while (x  0) {
-        x = 10;   Делим x на 10
-        length++;   Увеличиваем длину
+    x = customAbs(x);
+    while (x > 0) {
+        x /= 10;
+        length++;
     }
-    return length;   Возвращаем длину числа
+    return length;
 }
 
- Функция для вывода квадрата из символов ''
 void square(int x) {
-    for (int i = 0; i  x; ++i) {   Цикл по высоте
-        for (int j = 0; j  x; ++j) {   Цикл по ширине
-            cout  '';   Выводим символ ''
+    for (int i = 0; i < x; ++i) {
+        for (int j = 0; j < x; ++j) {
+            cout << '*';
         }
-        cout  endl;   Переход на новую строку после каждой строки квадрата
+        cout << endl;
     }
 }
 
- Функция для вывода правого треугольника
 void rightTriangle(int x) {
-    for (int i = 1; i = x; ++i) {   Цикл по высоте
-         Выводим пробелы перед символами ''
-        for (int j = 0; j  x - i; ++j) {
-            cout  ' ';   Выводим пробел
+    for (int i = 1; i <= x; ++i) {
+        for (int j = 0; j < x - i; ++j) {
+            cout << ' ';
         }
-        for (int j = 0; j  i; ++j) {
-            cout  '';   Выводим символ ''
+        for (int j = 0; j < i; ++j) {
+            cout << '*';
         }
-        cout  endl;   Переход на новую строку после каждой строки треугольника
+        cout << endl;
     }
 }
- --- Модуль 4 Массивы ---
 
- Функция для нахождения максимума по модулю в массиве
+// --- Модуль 4: Массивы ---
+
 int maxAbs(int arr[], int size) {
-    int max_value = arr[0];   Инициализируем первым элементом массива
-    for (int i = 1; i  size; ++i) {
-        if (abs(arr[i])  abs(max_value)) {   Сравниваем по модулю
-            max_value = arr[i];   Обновляем максимальное значение
+    int max_value = arr[0];
+    for (int i = 1; i < size; ++i) {
+        if (abs(arr[i]) > abs(max_value)) {
+            max_value = arr[i];
         }
     }
     return max_value;
 }
 
- Функция для проверки корректного ввода числа
-templatetypename T
-bool getInput(T &var) {
-    while (true) {
-        cin  var;   Попытка ввода
-        if (cin.fail()) {   Если произошла ошибка ввода
-            cin.clear();   Очищаем ошибку
-            cin.ignore(numeric_limitsstreamsizemax(), 'n');   Игнорируем оставшийся ввод
-            cout  Ошибка ввода. Пожалуйста, введите корректное значение ;
-        } else {
-            cin.ignore(numeric_limitsstreamsizemax(), 'n');   Игнорируем оставшийся ввод
-            return true;   Ввод успешен
-        }
-    }
-}
-
- Главная функция
+// Главная функция
 int main() {
-     --- Модуль 1 ---
+    // 1. Получить дробную часть числа
     double number;
-    cout  Введите число для получения дробной части ;
-    getInput(number);
-    cout  Дробная часть числа   fraction(number)  endl;
+    cout << "Введите число для получения дробной части: ";
+    cin >> number;
+    cout << "Дробная часть числа " << number << ": " << fraction(number) << endl;
 
+    // 2. Проверка, является ли число двузначным
     int num;
-    cout  Введите целое число для проверки, является ли оно двузначным ;
-    getInput(num);
-    cout  (is2Digits(num)  Число двузначное.  Число не двузначное.)  endl;
+    cout << "Введите целое число для проверки двузначности: ";
+    cin >> num;
+    cout << (is2Digits(num) ? "Число двузначное." : "Число не двузначное.") << endl;
 
-    int a, b, num3;
-    cout  Введите два границ диапазона (a, b) и число для проверки диапазона ;
-    getInput(a);
-    getInput(b);
-    getInput(num3);
-    cout  (isInRange(a, b, num3)  Число входит в диапазон.  Число не входит в диапазон.)  endl;
+    // 3. Проверка, входит ли число в диапазон
+    int a, b, checkNum;
+    cout << "Введите два границ диапазона (a, b): ";
+    cin >> a >> b;
+    cout << "Введите число для проверки вхождения в диапазон: ";
+    cin >> checkNum;
+    cout << (isInRange(a, b, checkNum) ? "Число входит в диапазон." : "Число не входит в диапазон.") << endl;
 
+    // 4. Проверка равенства трех чисел
     int a2, b2, c;
-    cout  Введите три целых числа для проверки их равенства ;
-    getInput(a2);
-    getInput(b2);
-    getInput(c);
-    cout  (isEqual(a2, b2, c)  Все числа равны.  Числа не равны.)  endl;
+    cout << "Введите три целых числа для проверки равенства: ";
+    cin >> a2 >> b2 >> c;
+    cout << (isEqual(a2, b2, c) ? "Все числа равны." : "Числа не равны.") << endl;
 
-     --- Модуль 2 ---
-    cout  Введите число для получения его модуля ;
-    getInput(num);
-    cout  Модуль числа   customAbs(num)  endl;
+    // 5. Получение модуля числа
+    int numForAbs;
+    cout << "Введите число для получения модуля: ";
+    cin >> numForAbs;
+    cout << "Модуль числа " << numForAbs << ": " << customAbs(numForAbs) << endl;
 
-    cout  Введите число для проверки делимости на 3 или 5 ;
-    getInput(num);
-    cout  (is35(num)  Число делится на 3 или 5, но не на оба.  Число не удовлетворяет условию.)  endl;
+    // 6. Проверка делимости на 3 или 5
+    int numForDiv;
+    cout << "Введите число для проверки делимости на 3 или 5: ";
+    cin >> numForDiv;
+    cout << (is35(numForDiv) ? "Число делится на 3 или 5." : "Число не делится на 3 или 5.") << endl;
+    // 7. Нахождение максимума из трех чисел
+    int num1, num2, num3;
+    cout << "Введите три целых числа для нахождения максимума: ";
+    cin >> num1 >> num2 >> num3;
+    cout << "Максимум из трех чисел: " << max3(num1, num2, num3) << endl;
 
-    int x, y, z;
-    cout  Введите три числа для нахождения максимума ;
-    getInput(x);
-    getInput(y);
-    getInput(z);
-    cout  Максимум из трех чисел   max3(x, y, z)  endl;
+    // 8. Выполнение двойной суммы
+    int x1, x2;
+    cout << "Введите два числа для двойной суммы: ";
+    cin >> x1 >> x2;
+    cout << "Результат двойной суммы: " << sum2(x1, x2) << endl;
 
-    int x2, y2;
-    cout  Введите два числа для их суммы (если сумма от 10 до 19, результат будет 20) ;
-    getInput(x2);
-    getInput(y2);
-    cout  Сумма   sum2(x2, y2)  endl;
+    // 9. Получение названия дня недели
+    int dayNum;
+    cout << "Введите число от 1 до 7 для получения дня недели: ";
+    cin >> dayNum;
+    cout << "День недели для числа " << dayNum << ": " << day(dayNum) << endl;
 
-    cout  Введите номер дня недели (1-7) ;
-    getInput(num);
-    cout  День недели   day(num)  endl;
+    // 10. Получение строки с числами от 0 до x
+    int rangeNum;
+    cout << "Введите число x для получения строку с числами от 0 до x: ";
+    cin >> rangeNum;
+    cout << "Числа от 0 до " << rangeNum << ": " << listNums(rangeNum) << endl;
 
-     --- Модуль 3 ---
-    cout  Введите число для вывода всех чисел от 0 до этого числа ;
-    getInput(num);
-    cout  Числа   listNums(num)  endl;
+    // 11. Получение строки с четными числами от 0 до x
+    cout << "Четные числа от 0 до " << rangeNum << ": " << chet(rangeNum) << endl;
 
-    cout  Введите число для вывода всех четных чисел от 0 до этого числа ;
-    getInput(num);
-    cout  Четные числа   chet(num)  endl;
+    // 12. Получение длины числа
+    long longNum;
+    cout << "Введите число для получения его длины: ";
+    cin >> longNum;
+    cout << "Длина числа " << longNum << ": " << numLen(longNum) << endl;
 
-    cout  Введите число для получения его длины ;
-    getInput(num);
-    cout  Длина числа   numLen(num)  endl;
+    // 13. Вывод квадрата из символов '*'
+    int squareSize;
+    cout << "Введите размер квадрата: ";
+    cin >> squareSize;
+    cout << "Квадрат размера " << squareSize << ":\n";
+    square(squareSize);
 
-    cout  Введите размер стороны квадрата ;
-    getInput(num);
-    cout  Квадратn;
-    square(num);
+    // 14. Вывод правого треугольника из символов '*'
+    int triangleSize;
+    cout << "Введите размер треугольника: ";
+    cin >> triangleSize;
+    cout << "Правый треугольник размера " << triangleSize << ":\n";
+    rightTriangle(triangleSize);
 
-    cout  Введите высоту правого треугольника ;
-    getInput(num);
-    cout  Правый треугольникn;
-    rightTriangle(num);
-
-     --- Модуль 4 ---
-    int size;
-    cout  Введите размер массива ;
-    getInput(size);
-    int arr[size];
-    cout  Введите элементы массива ;
-    for (int i = 0; i  size; ++i) {
-        getInput(arr[i]);
+    // 15. Нахождение максимума по модулю в массиве
+    const int SIZE = 5;
+    int arr[SIZE];
+    cout << "Введите " << SIZE << " целых числа для нахождения максимума по модулю: ";
+    for (int i = 0; i < SIZE; ++i) {
+        cin >> arr[i];
     }
-    cout  Максимум по модулю в массиве   maxAbs(arr, size)  endl;
+    cout << "Максимальное по модулю значение: " << maxAbs(arr, SIZE) << endl;
 
     return 0;
 }
